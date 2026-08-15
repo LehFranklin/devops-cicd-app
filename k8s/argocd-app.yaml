@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: devops-cicd-app
+  namespace: argocd
+spec:
+  project: default
+
+  # Where Argo CD should look for manifests
+  source:
+    repoURL: https://github.com/LehFranklin/devops-cicd-app.git
+    targetRevision: main
+    path: k8s
+
+  # Where Argo CD should deploy them
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
