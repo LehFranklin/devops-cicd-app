@@ -1,0 +1,14 @@
+{
+  "name": "devops-cicd-app",
+  "version": "1.0.0",
+  "description": "Sample app for self-healing GitOps CI/CD pipeline project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/server.test.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "prom-client": "^15.1.3"
+  }
+}

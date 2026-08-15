@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-cicd-app
+  labels:
+    app: devops-cicd-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-cicd-app
+  template:
+    metadata:
+      labels:
+        app: devops-cicd-app
+    spec:
+      containers:
+        - name: devops-cicd-app
+          image: devops-cicd-app:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: APP_VERSION
+              value: "v1"
+            - name: FAIL_RATE
+              value: "0"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
