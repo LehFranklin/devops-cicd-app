@@ -17,15 +17,15 @@ spec:
     spec:
       containers:
         - name: devops-cicd-app
-          image: devops-cicd-app:v3
+          image: devops-cicd-app:v2
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
           env:
             - name: APP_VERSION
-              value: "v3-broken"
+              value: "v2"
             - name: FAIL_RATE
-              value: "0.8"
+              value: "0"
           readinessProbe:
             httpGet:
               path: /health
