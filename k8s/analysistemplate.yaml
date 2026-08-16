@@ -3,6 +3,8 @@ kind: AnalysisTemplate
 metadata:
   name: error-rate-check
 spec:
+  args:
+    - name: canary-hash
   metrics:
     - name: error-rate
       interval: 15s
@@ -14,9 +16,9 @@ spec:
           address: http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
           query: |
             (
-              sum(rate(http_requests_total{job="devops-cicd-app", status=~"5.."}[1m])) or vector(0)
+              sum(rate(http_requests_total{job="devops-cicd-app", status=~"5..", rollouts_pod_template_hash="{{args.canary-hash}}"}[1m])) or vector(0)
             )
             /
             (
-              sum(rate(http_requests_total{job="devops-cicd-app"}[1m])) or vector(1)
+              sum(rate(http_requests_total{job="devops-cicd-app", rollouts_pod_template_hash="{{args.canary-hash}}"}[1m])) or vector(1)
             )
