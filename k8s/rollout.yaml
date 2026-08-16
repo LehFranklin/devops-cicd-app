@@ -41,8 +41,6 @@ spec:
 
   strategy:
     canary:
-      stableService: devops-cicd-app
-      canaryService: devops-cicd-app
       steps:
         - setWeight: 20
           pause: {}
