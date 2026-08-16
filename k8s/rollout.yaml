@@ -1,11 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: devops-cicd-app
   labels:
     app: devops-cicd-app
 spec:
-  replicas: 1
+  replicas: 3
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: devops-cicd-app
@@ -37,3 +38,13 @@ spec:
               port: 3000
             initialDelaySeconds: 5
             periodSeconds: 10
+
+  strategy:
+    canary:
+      stableService: devops-cicd-app
+      canaryService: devops-cicd-app
+      steps:
+        - setWeight: 20
+          pause: {}
+        - setWeight: 50
+          pause: { duration: 30s }
