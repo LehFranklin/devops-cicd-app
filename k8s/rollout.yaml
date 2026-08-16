@@ -17,13 +17,13 @@ spec:
     spec:
       containers:
         - name: devops-cicd-app
-          image: devops-cicd-app:v1
+          image: devops-cicd-app:v2
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
           env:
             - name: APP_VERSION
-              value: "v1"
+              value: "v2"
             - name: FAIL_RATE
               value: "0"
           readinessProbe:
